@@ -866,23 +866,21 @@ int minionEffect(struct gameState *state, int choiceGainCoins, int choiceDiscard
         //other players discard hand and redraw if hand size > 4
         for (i = 0; i < state->numPlayers; i++)
         {
-            if (i != currentPlayer)
+            if (state->handCount[i] > 4)
             {
-                if (state->handCount[i] > 4)
+                //discard hand
+                while (state->handCount[i] > 0)
                 {
-                    //discard hand
-                    while (state->handCount[i] > 0)
-                    {
-                        discardCard(handPos, i, state, 0);
-                    }
+                    discardCard(handPos, i, state, 0);
+                }
 
-                    //draw 4
-                    for (j = 0; j < 4; j++)
-                    {
-                        drawCard(i, state);
-                    }
+                //draw 4
+                for (j = 0; j < 4; j++)
+                {
+                    drawCard(i, state);
                 }
             }
+            
         }
     }
     return 0;
