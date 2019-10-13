@@ -1021,12 +1021,9 @@ int mineEffect(struct gameState *state, int treasureToTrash, int treasureToGain,
 
     j = state->hand[currentPlayer][treasureToTrash]; //store card we will trash
 
-    if (state->hand[currentPlayer][treasureToTrash] < copper || state->hand[currentPlayer][treasureToTrash] > gold)
-    {
-        return -1;
-    }
 
-    else if (treasureToGain > treasure_map || treasureToGain < curse)
+
+    if (treasureToGain > treasure_map || treasureToGain < curse)
     {
         return -1;
     }
@@ -1038,7 +1035,6 @@ int mineEffect(struct gameState *state, int treasureToTrash, int treasureToGain,
 
     gainCard(treasureToGain, state, 2, currentPlayer);
     //discard card from hand
-    discardCard(handPos, currentPlayer, state, 0);
 
     //discard trashed card
     for (i = 0; i < state->handCount[currentPlayer]; i++)
