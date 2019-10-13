@@ -846,7 +846,7 @@ int minionEffect(struct gameState *state, int choiceGainCoins, int choiceDiscard
 
     if (choiceGainCoins)
     {
-        increaseTreasure(state, 4); //Add 4 coins to the amount of coins
+        increaseTreasure(state, 3); //Add 4 coins to the amount of coins
     }
     else if (choiceDiscard) //discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
     {
@@ -918,8 +918,6 @@ int ambassadorEffect(struct gameState *state, int cardToDiscard, int numberOfCar
     if (DEBUG)
         printf("Player %d reveals card number: %d\n", currentPlayer, state->hand[currentPlayer][cardToDiscard]);
 
-    //increase supply count for choosen card by amount being discarded
-    state->supplyCount[state->hand[currentPlayer][cardToDiscard]] += numberOfCardsToDiscard;
 
     //each other player gains a copy of revealed card
     for (i = 0; i < state->numPlayers; i++)
@@ -930,8 +928,6 @@ int ambassadorEffect(struct gameState *state, int cardToDiscard, int numberOfCar
         }
     }
 
-    //discard played card from hand
-    discardCard(handPos, currentPlayer, state, 0);
 
     //trash copies of cards returned to supply
     for (j = 0; j < numberOfCardsToDiscard; j++)
