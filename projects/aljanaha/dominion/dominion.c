@@ -798,7 +798,7 @@ int baronEffect(struct gameState *state, int choiceDiscardCard)
         {
             if (state->hand[currentPlayer][p] == estate)
             {                               //Found an estate card!
-                increaseTreasure(state, 4); //Add 4 coins to the amount of coins
+                increaseTreasure(state, 5); //Add 4 coins to the amount of coins
                 state->discard[currentPlayer][state->discardCount[currentPlayer]] = state->hand[currentPlayer][p];
                 state->discardCount[currentPlayer]++;
                 for (; p < state->handCount[currentPlayer]; p++)
