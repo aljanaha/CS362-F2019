@@ -952,10 +952,7 @@ int tributeEffect(struct gameState *state, int handPos)
     int nextPlayer = currentPlayer + 1;
     int tributeRevealedCards[2] = {-1, -1};
     int i;
-    if (currentPlayer < (state->numPlayers - 1))
-    {
-        nextPlayer = 0;
-    }
+
 
     if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1)
     {
@@ -990,7 +987,7 @@ int tributeEffect(struct gameState *state, int handPos)
 
     if (tributeRevealedCards[0] == tributeRevealedCards[1])
     { //If we have a duplicate card, just drop one
-        tributeRevealedCards[1] = -1;
+        
     }
 
     //discard played card from hand
