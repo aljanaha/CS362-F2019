@@ -817,7 +817,6 @@ int baronEffect(struct gameState *state, int choiceDiscardCard)
                     printf("Must gain an estate if there are any\n");
                 }
                 supplyEstate(state, currentPlayer);
-                card_not_discarded = 0; //Exit the loop
             }
 
             else
