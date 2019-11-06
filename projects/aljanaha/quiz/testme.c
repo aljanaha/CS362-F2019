@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-const char *all = "!\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+const char *all = " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 const int maxTime = 5;
 char inputChar()
 {
   // TODO: rewrite this function
-  int chosen = rand() % 94;
+  int chosen = rand() % 96;
   return all[chosen];
 }
 
@@ -17,20 +17,13 @@ char *inputString()
 {
   // TODO: rewrite this function
   char *generated = NULL;
-  int length = rand() % 6;
-  if (length)
+  int length = 5;
+  generated = malloc(sizeof(char) * (length + 1));
+  for (int i = 0; i < length; i++)
   {
-    generated = malloc(sizeof(char) * (length + 1));
-    for (int i = 0; i < length; i++)
-    {
-      generated[i] = inputChar();
-    }
-    return generated;
+    generated[i] = inputChar();
   }
-  else
-  {
-    return "";
-  }
+  return generated;
 }
 
 void testme()
