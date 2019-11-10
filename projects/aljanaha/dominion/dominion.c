@@ -880,7 +880,6 @@ int minionEffect(struct gameState *state, int choiceGainCoins, int choiceDiscard
                     drawCard(i, state);
                 }
             }
-            
         }
     }
     return 0;
@@ -918,7 +917,6 @@ int ambassadorEffect(struct gameState *state, int cardToDiscard, int numberOfCar
     if (DEBUG)
         printf("Player %d reveals card number: %d\n", currentPlayer, state->hand[currentPlayer][cardToDiscard]);
 
-
     //each other player gains a copy of revealed card
     for (i = 0; i < state->numPlayers; i++)
     {
@@ -927,7 +925,6 @@ int ambassadorEffect(struct gameState *state, int cardToDiscard, int numberOfCar
             gainCard(state->hand[currentPlayer][cardToDiscard], state, 0, i);
         }
     }
-
 
     //trash copies of cards returned to supply
     for (j = 0; j < numberOfCardsToDiscard; j++)
@@ -952,7 +949,6 @@ int tributeEffect(struct gameState *state, int handPos)
     int nextPlayer = currentPlayer + 1;
     int tributeRevealedCards[2] = {-1, -1};
     int i;
-
 
     if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1)
     {
@@ -987,7 +983,6 @@ int tributeEffect(struct gameState *state, int handPos)
 
     if (tributeRevealedCards[0] == tributeRevealedCards[1])
     { //If we have a duplicate card, just drop one
-        
     }
 
     //discard played card from hand
@@ -1020,8 +1015,6 @@ int mineEffect(struct gameState *state, int treasureToTrash, int treasureToGain,
     int currentPlayer = whoseTurn(state);
 
     j = state->hand[currentPlayer][treasureToTrash]; //store card we will trash
-
-
 
     if (treasureToGain > treasure_map || treasureToGain < curse)
     {
