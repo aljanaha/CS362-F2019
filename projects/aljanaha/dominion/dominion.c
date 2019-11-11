@@ -846,7 +846,7 @@ int minionEffect(struct gameState *state, int choiceGainCoins, int choiceDiscard
 
     if (choiceGainCoins)
     {
-        increaseTreasure(state, 3); //Add 4 coins to the amount of coins
+        increaseTreasure(state, 3); //Add 2 coins to the amount of coins
     }
     else if (choiceDiscard) //discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
     {
@@ -891,24 +891,28 @@ int ambassadorEffect(struct gameState *state, int cardToDiscard, int numberOfCar
     int currentPlayer = whoseTurn(state);
     int i, j;
     j = 0; //used to check if player has enough cards to discard
+    int cardValueToDiscard = handCard(cardToDiscard, state);
 
     if (numberOfCardsToDiscard > 2 || numberOfCardsToDiscard < 0)
     {
+
         return -1;
     }
 
     else if (cardToDiscard == handPos)
     {
+
         return -1;
     }
 
     for (i = 0; i < state->handCount[currentPlayer]; i++)
     {
-        if (i != handPos && i == state->hand[currentPlayer][cardToDiscard] && i != cardToDiscard)
+        if (i != handPos && cardValueToDiscard == state->hand[currentPlayer][i])
         {
             j++;
         }
     }
+
     if (j < numberOfCardsToDiscard)
     {
         return -1;
@@ -946,7 +950,7 @@ int tributeEffect(struct gameState *state, int handPos)
 {
 
     int currentPlayer = whoseTurn(state);
-    int nextPlayer = currentPlayer + 1;
+    int nextPlayer = nextTurn(state);
     int tributeRevealedCards[2] = {-1, -1};
     int i;
 
@@ -1011,11 +1015,11 @@ int tributeEffect(struct gameState *state, int handPos)
 
 int mineEffect(struct gameState *state, int treasureToTrash, int treasureToGain, int handPos)
 {
+
     int j, i;
     int currentPlayer = whoseTurn(state);
-
     j = state->hand[currentPlayer][treasureToTrash]; //store card we will trash
-
+    
     if (treasureToGain > treasure_map || treasureToGain < curse)
     {
         return -1;
@@ -1496,6 +1500,70 @@ int updateCoins(int player, struct gameState *state, int bonus)
     state->coins += bonus;
 
     return 0;
+}
+
+void setPlayerHand(int p, int handCount, int *hand, struct gameState *G)
+{
+    G->handCount[p] = handCount;
+    for (int i = 0; i < handCount; i++)
+    {
+        G->hand[p][i] = hand[i];
+    }
+}
+
+void assert(int expected, int actual, char *message)
+{
+    if (expected != actual)
+    {
+        printf("%s was expecting %d but was %d \n", message, expected, actual);
+    }
+}
+
+void assertOne(int expected, char *message)
+{
+    if (expected)
+    {
+        printf("%s \n", message);
+    }
+}
+
+int nextTurn(struct gameState *state)
+{
+    int currentPlayer = whoseTurn(state);
+    if (currentPlayer < (state->numPlayers - 1))
+    {
+        return currentPlayer + 1; //Still safe to increment
+    }
+    else
+    {
+        return 0; //Max player has been reached, loop back around to player 1
+    }
+}
+
+int compareArrays(int *array1, int *array2, int size1, int size2)
+{
+    if (size1 != size2)
+    {
+        return 0;
+    }
+    else
+    {
+        for (int i = 0; i < size1; i++)
+        {
+            if (array1[i] != array2[i])
+            {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+int unchangedPlayer(int player, struct gameState *stateAfter, struct gameState *stateBefore)
+{
+    return compareArrays(stateAfter->hand[player], stateBefore->hand[player], stateAfter->handCount[player], stateBefore->handCount[player]) ||
+           compareArrays(stateAfter->deck[player], stateBefore->deck[player], stateAfter->deckCount[player], stateBefore->deckCount[player]) ||
+           compareArrays(stateAfter->discard[player], stateBefore->discard[player], stateAfter->discardCount[player], stateBefore->discardCount[player]);
 }
 
 //end of dominion.c

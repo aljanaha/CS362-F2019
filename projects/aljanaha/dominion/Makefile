@@ -28,10 +28,28 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom unittest1 unittest1.exe player player.exe  *.gcov *.gcda *.gcno *.so *.out testdrawcard testdrawcard.exe
+	rm -f *.o playdom.exe playdom unittest1 unittest1.exe unittest2 unittest2.exe  unittest3 unittest3.exe unittest4 unittest4.exe unittest5 unittest5.exe player player.exe  *.gcov *.gcda *.gcno *.so *.out testdrawcard testdrawcard.exe
 
-testdominion: dominion.o unittest1.c
+unittest1: dominion.o unittest1.c
 	gcc -o unittest1 -g  unittest1.c   dominion.o rngs.o $(CFLAGS)
+
+unittest2: dominion.o unittest2.c
+	gcc -o unittest2 -g  unittest2.c   dominion.o rngs.o $(CFLAGS)
+
+unittest3: dominion.o unittest3.c
+	gcc -o unittest3 -g  unittest3.c   dominion.o rngs.o $(CFLAGS)
+
+unittest4: dominion.o unittest4.c
+	gcc -o unittest4 -g  unittest4.c   dominion.o rngs.o $(CFLAGS)
+
+unittest5: dominion.o unittest5.c
+	gcc -o unittest5 -g  unittest5.c   dominion.o rngs.o $(CFLAGS)
+
+testdominion: unittest1 unittest2 unittest3 unittest4 unittest5
 	./unittest1 >>test.out
-	gcov -b -f -c unittest1.c >> unittestresults.out
+	./unittest2 >>test.out
+	./unittest3 >>test.out
+	./unittest4 >>test.out
+	./unittest5 >>test.out
+	gcov -b -f -c dominion.c >> unittestresults.out
 
