@@ -15,7 +15,7 @@ void testBaronEffect()
                      sea_hag, baron, smithy};
 
         initializeGame(2, k, 2, &G);
-
+        randomInitGame(&G);
         // Set current player hand
         int currentPlayer = whoseTurn(&G);
         // Set player hand at random

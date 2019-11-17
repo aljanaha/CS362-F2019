@@ -17,10 +17,9 @@ void testTributeEffect()
                  sea_hag, tribute, smithy};
 
     initializeGame(2, k, 2, &G);
+    randomInitGame(&G);
 
     // Set current player hand
-    // Set current player as random
-    G.whoseTurn = randomNumber(0, 1);
     int currentPlayer = whoseTurn(&G);
     // Set player hand at random
     setPlayerRandomHand(currentPlayer, 5, &G);

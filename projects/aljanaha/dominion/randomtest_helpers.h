@@ -10,4 +10,5 @@ void setPlayerRandomDiscard(int p, int handCount, struct gameState *G);
 int cardIsAction(int card);
 int cardIsTreasure(int card);
 int cardIsVictory(int card);
+void randomInitGame(struct gameState *G);
 #endif

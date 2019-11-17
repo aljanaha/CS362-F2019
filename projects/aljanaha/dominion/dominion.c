@@ -880,7 +880,6 @@ int minionEffect(struct gameState *state, int choiceGainCoins, int choiceDiscard
                     drawCard(i, state);
                 }
             }
-            
         }
     }
     return 0;
@@ -918,7 +917,6 @@ int ambassadorEffect(struct gameState *state, int cardToDiscard, int numberOfCar
     if (DEBUG)
         printf("Player %d reveals card number: %d\n", currentPlayer, state->hand[currentPlayer][cardToDiscard]);
 
-
     //each other player gains a copy of revealed card
     for (i = 0; i < state->numPlayers; i++)
     {
@@ -927,7 +925,6 @@ int ambassadorEffect(struct gameState *state, int cardToDiscard, int numberOfCar
             gainCard(state->hand[currentPlayer][cardToDiscard], state, 0, i);
         }
     }
-
 
     //trash copies of cards returned to supply
     for (j = 0; j < numberOfCardsToDiscard; j++)
@@ -952,7 +949,6 @@ int tributeEffect(struct gameState *state, int handPos)
     int nextPlayer = nextTurn(state);
     int tributeRevealedCards[2] = {-1, -1};
     int i;
-
 
     if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1)
     {
@@ -987,7 +983,6 @@ int tributeEffect(struct gameState *state, int handPos)
 
     if (tributeRevealedCards[0] == tributeRevealedCards[1])
     { //If we have a duplicate card, just drop one
-        
     }
 
     //discard played card from hand
@@ -1020,8 +1015,6 @@ int mineEffect(struct gameState *state, int treasureToTrash, int treasureToGain,
     int currentPlayer = whoseTurn(state);
 
     j = state->hand[currentPlayer][treasureToTrash]; //store card we will trash
-
-
 
     if (treasureToGain > treasure_map || treasureToGain < curse)
     {
@@ -1505,16 +1498,14 @@ int updateCoins(int player, struct gameState *state, int bonus)
     return 0;
 }
 
-
-
 int randomNumber(int min, int max)
 {
-    return (rand() %  (max - min + 1)) + min ;
+    return (rand() % (max - min + 1)) + min;
 }
 
 int drawRandomCard()
 {
-    return randomNumber(0,26);
+    return randomNumber(0, 26);
 }
 
 void setPlayerRandomHand(int p, int handCount, struct gameState *G)
@@ -1523,9 +1514,8 @@ void setPlayerRandomHand(int p, int handCount, struct gameState *G)
     for (int i = 0; i < handCount; i++)
     {
         G->hand[p][i] = drawRandomCard();
-    } 
+    }
 }
-
 
 int fullHandCount(int player, int card, struct gameState *state)
 {
@@ -1540,7 +1530,6 @@ int fullHandCount(int player, int card, struct gameState *state)
 
     return count;
 }
-
 
 void assert(int expected, int actual, char *message)
 {
@@ -1577,7 +1566,6 @@ int compareArrays(int *array1, int *array2, int size1, int size2)
     return 1;
 }
 
-
 int unchangedPlayer(int player, struct gameState *stateAfter, struct gameState *stateBefore)
 {
     return compareArrays(stateAfter->hand[player], stateBefore->hand[player], stateAfter->handCount[player], stateBefore->handCount[player]) ||
@@ -1604,7 +1592,7 @@ void setPlayerRandomDeck(int p, int handCount, struct gameState *G)
     for (int i = 0; i < handCount; i++)
     {
         G->deck[p][i] = drawRandomCard();
-    } 
+    }
 }
 
 void setPlayerRandomDiscard(int p, int handCount, struct gameState *G)
@@ -1613,9 +1601,8 @@ void setPlayerRandomDiscard(int p, int handCount, struct gameState *G)
     for (int i = 0; i < handCount; i++)
     {
         G->discard[p][i] = drawRandomCard();
-    } 
+    }
 }
-
 
 int cardIsAction(int card)
 {
@@ -1641,6 +1628,29 @@ int cardIsVictory(int card)
         return 1;
     }
     return 0;
+}
+
+void randomInitGame(struct gameState *state)
+{
+    for (int i = 0; i < state->numPlayers; i++)
+    {
+        int playerDeckCount = randomNumber(0, 20);
+        int playerDiscardCount = randomNumber(0, 20);
+        int playerHandCount = randomNumber(0, 20);
+        setPlayerRandomHand(i, playerHandCount, state);
+        setPlayerRandomDeck(i, playerDeckCount, state);
+        setPlayerRandomDiscard(i, playerDiscardCount, state);
+    }
+
+    // Set current player as random
+    state->whoseTurn = randomNumber(0, state->numPlayers - 1);
+    state->numActions = randomNumber(1, 10);
+    state->coins = randomNumber(0, 15);
+
+    for (int i = curse; i < treasure_map + 1; i++)
+    {
+        state->supplyCount[i] = randomNumber(1, 10);
+    }
 }
 
 //end of dominion.c
