@@ -112,6 +112,9 @@ int supplyCount(int card, struct gameState *state);
 int fullDeckCount(int player, int card, struct gameState *state);
 /* Here deck = hand + discard + deck */
 
+int fullHandCount(int player, int card, struct gameState *state);
+// Here just in hand
+
 int whoseTurn(struct gameState *state);
 
 int endTurn(struct gameState *state);

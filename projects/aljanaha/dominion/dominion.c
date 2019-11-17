@@ -817,6 +817,7 @@ int baronEffect(struct gameState *state, int choiceDiscardCard)
                     printf("Must gain an estate if there are any\n");
                 }
                 supplyEstate(state, currentPlayer);
+                card_not_discarded = 0; //Exit the loop
             }
 
             else
@@ -948,7 +949,7 @@ int tributeEffect(struct gameState *state, int handPos)
 {
 
     int currentPlayer = whoseTurn(state);
-    int nextPlayer = currentPlayer + 1;
+    int nextPlayer = nextTurn(state);
     int tributeRevealedCards[2] = {-1, -1};
     int i;
 
@@ -1501,6 +1502,144 @@ int updateCoins(int player, struct gameState *state, int bonus)
     //add bonus
     state->coins += bonus;
 
+    return 0;
+}
+
+
+
+int randomNumber(int min, int max)
+{
+    return (rand() %  (max - min + 1)) + min ;
+}
+
+int drawRandomCard()
+{
+    return randomNumber(0,26);
+}
+
+void setPlayerRandomHand(int p, int handCount, struct gameState *G)
+{
+    G->handCount[p] = handCount;
+    for (int i = 0; i < handCount; i++)
+    {
+        G->hand[p][i] = drawRandomCard();
+    } 
+}
+
+
+int fullHandCount(int player, int card, struct gameState *state)
+{
+    int i;
+    int count = 0;
+
+    for (i = 0; i < state->handCount[player]; i++)
+    {
+        if (state->hand[player][i] == card)
+            count++;
+    }
+
+    return count;
+}
+
+
+void assert(int expected, int actual, char *message)
+{
+    if (expected != actual)
+    {
+        printf("%s was expecting %d but was %d \n", message, expected, actual);
+    }
+}
+
+void assertOne(int expected, char *message)
+{
+    if (expected)
+    {
+        printf("%s \n", message);
+    }
+}
+
+int compareArrays(int *array1, int *array2, int size1, int size2)
+{
+    if (size1 != size2)
+    {
+        return 0;
+    }
+    else
+    {
+        for (int i = 0; i < size1; i++)
+        {
+            if (array1[i] != array2[i])
+            {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+
+int unchangedPlayer(int player, struct gameState *stateAfter, struct gameState *stateBefore)
+{
+    return compareArrays(stateAfter->hand[player], stateBefore->hand[player], stateAfter->handCount[player], stateBefore->handCount[player]) ||
+           compareArrays(stateAfter->deck[player], stateBefore->deck[player], stateAfter->deckCount[player], stateBefore->deckCount[player]) ||
+           compareArrays(stateAfter->discard[player], stateBefore->discard[player], stateAfter->discardCount[player], stateBefore->discardCount[player]);
+}
+
+int nextTurn(struct gameState *state)
+{
+    int currentPlayer = whoseTurn(state);
+    if (currentPlayer < (state->numPlayers - 1))
+    {
+        return currentPlayer + 1; //Still safe to increment
+    }
+    else
+    {
+        return 0; //Max player has been reached, loop back around to player 1
+    }
+}
+
+void setPlayerRandomDeck(int p, int handCount, struct gameState *G)
+{
+    G->deckCount[p] = handCount;
+    for (int i = 0; i < handCount; i++)
+    {
+        G->deck[p][i] = drawRandomCard();
+    } 
+}
+
+void setPlayerRandomDiscard(int p, int handCount, struct gameState *G)
+{
+    G->discardCount[p] = handCount;
+    for (int i = 0; i < handCount; i++)
+    {
+        G->discard[p][i] = drawRandomCard();
+    } 
+}
+
+
+int cardIsAction(int card)
+{
+    if (card == adventurer || card == council_room || card == feast || card == mine || card == remodel || card == smithy || card == village || card == baron || card == great_hall || card == minion || card == steward || card == tribute || card == ambassador || card == cutpurse || card == embargo || card == outpost || card == salvager || card == sea_hag || card == treasure_map)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+int cardIsTreasure(int card)
+{
+    if (card == copper || card == silver || card == gold)
+    {
+        return 1;
+    }
+    return 0;
+}
+int cardIsVictory(int card)
+{
+    if (card == estate || card == duchy || card == province || card == gardens || card == great_hall)
+    {
+        return 1;
+    }
     return 0;
 }
 
