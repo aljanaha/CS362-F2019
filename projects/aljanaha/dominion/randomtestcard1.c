@@ -19,9 +19,10 @@ void testBaronEffect()
         // Set current player hand
         int currentPlayer = whoseTurn(&G);
         // Set player hand at random
-        setPlayerRandomHand(currentPlayer, 5, &G);
+        int playerHandSize = randomNumber(1, 10);
+        setPlayerRandomHand(currentPlayer, playerHandSize, &G);
         // Random baron position in player hand
-        int position = randomNumber(1, 5);
+        int position = randomNumber(1, playerHandSize);
         // Random choice to discard
         int choiceDiscardCard = randomNumber(0, 1);
 
@@ -57,7 +58,7 @@ int main()
 {
         printf("Random test baronEffect \n");
         srand(time(0));
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 1000; i++)
         {
                 printf("Iteration %d \n", i);
                 testBaronEffect();

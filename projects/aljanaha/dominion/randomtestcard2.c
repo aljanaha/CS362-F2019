@@ -21,15 +21,16 @@ void testMinionEffect()
     // Set current player hand
     int currentPlayer = whoseTurn(&G);
     // Set player hand at random
-    setPlayerRandomHand(currentPlayer, 5, &G);
+    int playerHandSize = randomNumber(1, 10);
+    setPlayerRandomHand(currentPlayer, playerHandSize, &G);
     int nextPlayer = nextTurn(&G);
     int numberInHandNextPlayer = randomNumber(0, 10);
     setPlayerRandomHand(nextPlayer, numberInHandNextPlayer, &G);
     // Random minion position in player hand
-    int position = randomNumber(1, 5);
+    int position = randomNumber(1, playerHandSize);
     // Random choice to discard
     int choiceGainCoins = randomNumber(0, 1);
-    int choiceDiscard = randomNumber(1, 5);
+    int choiceDiscard = randomNumber(0, 1);
 
     G.hand[currentPlayer][position] = minion;
     int treasureBefore = G.coins;
@@ -60,7 +61,7 @@ int main()
 {
     printf("Random test minionEffect \n");
     srand(time(0));
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 1000; i++)
     {
         printf("Iteration %d \n", i);
         testMinionEffect();
