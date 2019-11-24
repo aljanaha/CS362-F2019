@@ -11,5 +11,11 @@ int gainCard(int supplyPos, struct gameState *state, int toFlag, int player);
 int getCost(int cardNumber);
 int cardEffect(int card, int choice1, int choice2, int choice3,
                struct gameState *state, int handPos, int *bonus);
+void doBaron(int choice1, struct gameState *state, int currentPlayer);
+void doMinion(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);
+int nextTurn(struct gameState *state);
+int doAmbassador(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);
+void doTribute(struct gameState *state, int currentPlayer, int nextPlayer, int tributeRevealedCards[2]);
+int doMine(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);
 
 #endif
