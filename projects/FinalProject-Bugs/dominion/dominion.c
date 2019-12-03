@@ -1432,5 +1432,10 @@ int unchangedPlayer(int player, struct gameState *stateAfter, struct gameState *
            compareArrays(stateAfter->discard[player], stateBefore->discard[player], stateAfter->discardCount[player], stateBefore->discardCount[player]);
 }
 
+void setSupplyCount(struct gameState *G, int card, int supplyCount)
+{
+    G->supplyCount[card] = supplyCount;
+}
+
 //end of dominion.c
 

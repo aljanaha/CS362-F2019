@@ -7,5 +7,6 @@ void assert(int expected, int actual, char *message);
 int compareArrays(int *array1, int *array2, int size1, int size2);
 int unchangedPlayer(int player, struct gameState *stateAfter, struct gameState *stateBefore);
 int nextTurn(struct gameState *G);
+void setSupplyCount(struct gameState *G, int card, int supplyCount);
 
 #endif
