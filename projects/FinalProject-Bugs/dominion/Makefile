@@ -63,7 +63,7 @@ unittest10: dominion.o unittest10.c
 unittest11: dominion.o unittest11.c
 	gcc -o unittest11 -g  unittest11.c   dominion.o rngs.o $(CFLAGS)
 
-unittestresults: unittest1 
+unittestresults: unittest1 unittest2 unittest3 unittest4 unittest5 unittest6 unittest7 unittest8 unittest9 unittest10 unittest11  
 	./unittest1 >>unittestresults.out
 	./unittest2 >>unittestresults.out
 	./unittest3 >>unittestresults.out
