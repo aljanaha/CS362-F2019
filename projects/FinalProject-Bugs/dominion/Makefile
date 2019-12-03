@@ -31,11 +31,14 @@ all: playdom player
 unittest1: dominion.o unittest1.c
 	gcc -o unittest1 -g  unittest1.c   dominion.o rngs.o $(CFLAGS)
 
+unittest2: dominion.o unittest2.c
+	gcc -o unittest2 -g  unittest2.c   dominion.o rngs.o $(CFLAGS)
 
 unittestresults: unittest1 
 	./unittest1 >>unittestresults.out
+	./unittest2 >>unittestresults.out
 	gcov -b -f -c  dominion.c >> unittestresults.out
 	-gcovr -r . --html  --html-details -o report.html 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe unittest1 unittest1.exe  *.gcov *.gcda *.gcno *.so *.out *.html testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe unittest1 unittest1.exe unittest2 unittest1.exe *.gcov *.gcda *.gcno *.so *.out *.html testDrawCard testDrawCard.exe

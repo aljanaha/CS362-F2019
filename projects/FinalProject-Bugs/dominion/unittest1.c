@@ -18,15 +18,15 @@ void testMineTrashing()
     // Set current player hand
 
     int currentPlayer = whoseTurn(&G);
-    // Set player hand including treasure
+    // Set player hand including mine
     int cardToTrash = copper;
     int hand[5] = {mine, cardToTrash, copper, copper, estate};
     setPlayerHand(currentPlayer, 5, hand, &G);
-    int cardToTrashCountBefore = fullDeckCount(currentPlayer, estate, &G);
+    int cardToTrashCountBefore = fullDeckCount(currentPlayer, cardToTrash, &G);
     int handPos = 0;
     int bonus = 0;
     cardEffect(mine, 1, silver, 0, &G, handPos, &bonus);
-    int cardToTrashCountAfter = fullDeckCount(currentPlayer, estate, &G);
+    int cardToTrashCountAfter = fullDeckCount(currentPlayer, cardToTrash, &G);
     assert(cardToTrashCountBefore, cardToTrashCountAfter + 1, "Incorrect decrease in card to trash");
 }
 
@@ -44,7 +44,7 @@ void testTributeTrashing()
     // Set current player hand
 
     int currentPlayer = whoseTurn(&G);
-    // Set player hand including estate
+    // Set player hand including tribute
     int hand[5] = {tribute, copper, copper, copper, estate};
     setPlayerHand(currentPlayer, 5, hand, &G);
     int nextPlayer = nextTurn(&G);
