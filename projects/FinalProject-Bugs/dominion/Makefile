@@ -40,7 +40,12 @@ unittest3: dominion.o unittest3.c
 unittest4: dominion.o unittest4.c
 	gcc -o unittest4 -g  unittest4.c   dominion.o rngs.o $(CFLAGS)
 
-unittest5: dominion.o unittest6.c
+
+unittest5: dominion.o unittest5.c
+	gcc -o unittest5 -g  unittest5.c   dominion.o rngs.o $(CFLAGS)
+
+
+unittest6: dominion.o unittest6.c
 	gcc -o unittest6 -g  unittest6.c   dominion.o rngs.o $(CFLAGS)
 
 

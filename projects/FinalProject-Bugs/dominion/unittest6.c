@@ -62,7 +62,7 @@ void testNegativeCase(int cardToWin, int treasureToSet)
 int main()
 {
     printf("\n");
-    printf("Testing bug #5\n");
+    printf("Testing bug #6\n");
     testPositiveCase(mine, 0);
     testPositiveCase(duchy, 0);
     testNegativeCase(gold, 1);
