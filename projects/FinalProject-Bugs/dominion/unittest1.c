@@ -27,7 +27,7 @@ void testMineTrashing()
     int bonus = 0;
     cardEffect(mine, 1, silver, 0, &G, handPos, &bonus);
     int cardToTrashCountAfter = fullDeckCount(currentPlayer, cardToTrash, &G);
-    assert(cardToTrashCountBefore, cardToTrashCountAfter + 1, "Incorrect decrease in card to trash");
+    assert(cardToTrashCountBefore, cardToTrashCountAfter + 1, "Incorrect count in card to trash");
 }
 
 void testTributeTrashing()

@@ -7,23 +7,23 @@
 
 void testPositiveCase(int cardToTrash, int cardToWin)
 {
-    printf("\ttest Mine cost Positive\n");
+    printf("\ttest remodel cost Positive\n");
     printf("\tCard to win %d card to trash %d \n", cardToWin, cardToTrash);
     struct gameState G;
     // Cards to play
-    int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+    int k[10] = {adventurer, gardens, embargo, village, minion, remodel, cutpurse,
                  sea_hag, baron, smithy};
     initializeGame(2, k, 2, &G);
     // Set current player hand
     int currentPlayer = whoseTurn(&G);
-    // Set player hand including mine
-    int hand[5] = {mine, cardToTrash, copper, copper, estate};
+    // Set player hand including remodel
+    int hand[5] = {remodel, cardToTrash, copper, copper, estate};
     setPlayerHand(currentPlayer, 5, hand, &G);
     int cardToTrashCountBefore = fullDeckCount(currentPlayer, cardToTrash, &G);
     int cardToGainCountBefore = fullDeckCount(currentPlayer, cardToWin, &G);
     int handPos = 0;
     int bonus = 0;
-    int r = cardEffect(mine, 1, cardToWin, 0, &G, handPos, &bonus);
+    int r = cardEffect(remodel, 1, cardToWin, 0, &G, handPos, &bonus);
     int cardToTrashCountAfter = fullDeckCount(currentPlayer, cardToTrash, &G);
     int cardToGainCountAfter = fullDeckCount(currentPlayer, cardToWin, &G);
     assert(0, r, "Should succeed");
@@ -33,22 +33,22 @@ void testPositiveCase(int cardToTrash, int cardToWin)
 
 void testNegativeCase(int cardToTrash, int cardToWin)
 {
-    printf("\ttest Mine cost negative\n");
+    printf("\ttest remodel cost negative\n");
     struct gameState G;
     // Cards to play
-    int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+    int k[10] = {adventurer, gardens, embargo, village, minion, remodel, cutpurse,
                  sea_hag, baron, smithy};
     initializeGame(2, k, 2, &G);
     // Set current player hand
     int currentPlayer = whoseTurn(&G);
-    // Set player hand including mine
-    int hand[5] = {mine, cardToTrash, copper, copper, estate};
+    // Set player hand including remodel
+    int hand[5] = {remodel, cardToTrash, copper, copper, estate};
     setPlayerHand(currentPlayer, 5, hand, &G);
     int cardToTrashCountBefore = fullDeckCount(currentPlayer, cardToTrash, &G);
     int cardToGainCountBefore = fullDeckCount(currentPlayer, cardToWin, &G);
     int handPos = 0;
     int bonus = 0;
-    int r = cardEffect(mine, 1, cardToWin, 0, &G, handPos, &bonus);
+    int r = cardEffect(remodel, 1, cardToWin, 0, &G, handPos, &bonus);
     int cardToTrashCountAfter = fullDeckCount(currentPlayer, cardToTrash, &G);
     int cardToGainCountAfter = fullDeckCount(currentPlayer, cardToWin, &G);
     assert(-1, r, "Should not succeed");
@@ -59,9 +59,10 @@ void testNegativeCase(int cardToTrash, int cardToWin)
 int main()
 {
     printf("\n");
-    printf("Testing bug #2\n");
-    testPositiveCase(copper, silver);
-    testPositiveCase(silver, gold);
-    testNegativeCase(copper, gold);
+    printf("Testing bug #3\n");
+    testPositiveCase(feast, council_room);
+    testPositiveCase(ambassador, tribute);
+    testNegativeCase(curse, gold);
+    testNegativeCase(estate, duchy);
     printf("\n");
 }
