@@ -60,6 +60,9 @@ unittest9: dominion.o unittest9.c
 unittest10: dominion.o unittest10.c
 	gcc -o unittest10 -g  unittest10.c   dominion.o rngs.o $(CFLAGS)
 
+unittest11: dominion.o unittest11.c
+	gcc -o unittest11 -g  unittest11.c   dominion.o rngs.o $(CFLAGS)
+
 unittestresults: unittest1 
 	./unittest1 >>unittestresults.out
 	./unittest2 >>unittestresults.out
@@ -70,8 +73,9 @@ unittestresults: unittest1
 	./unittest8 >>unittestresults.out
 	./unittest9 >>unittestresults.out
 	./unittest10 >>unittestresults.out
+	./unittest11 >>unittestresults.out
 	gcov -b -f -c  dominion.c >> unittestresults.out
 	-gcovr -r . --html  --html-details -o report.html 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe unittest1 unittest1.exe unittest2 unittest2.exe  unittest3 unittest3.exe unittest4 unittest4.exe unittest5 unittest5.exe unittest6 unittest6.exe unittest7 unittest7.exe unittest8 unittest8.exe unittest9 unittest9.exe unittest10 unittest10.exe *.gcov *.gcda *.gcno *.so *.out *.html testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe unittest1 unittest1.exe unittest2 unittest2.exe  unittest3 unittest3.exe unittest4 unittest4.exe unittest5 unittest5.exe unittest6 unittest6.exe unittest7 unittest7.exe unittest8 unittest8.exe unittest9 unittest9.exe unittest10 unittest10.exe unittest11 unittest11.exe *.gcov *.gcda *.gcno *.so *.out *.html testDrawCard testDrawCard.exe

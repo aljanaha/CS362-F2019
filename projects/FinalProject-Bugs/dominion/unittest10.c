@@ -13,14 +13,14 @@ void testAmbassador(int *cardsToDiscard, int numberCardsDiscard)
     struct gameState G;
     // Cards to play
     int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
-                 sea_hag, tribute, smithy};
+                 sea_hag, ambassador, smithy};
 
     initializeGame(2, k, 2, &G);
 
     // Set current player hand
 
     int currentPlayer = whoseTurn(&G);
-    // Set player hand including estate
+    // Set player hand including ambassador
     int hand[5] = {ambassador, copper, copper, copper, copper};
     for (int i = 0; i < numberCardsDiscard; i++)
     {

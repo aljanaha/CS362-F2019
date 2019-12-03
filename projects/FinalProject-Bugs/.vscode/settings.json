@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "unittest_helpers.h": "c"
+        "unittest_helpers.h": "c",
+        "dominion_helpers.h": "c"
     }
 }
