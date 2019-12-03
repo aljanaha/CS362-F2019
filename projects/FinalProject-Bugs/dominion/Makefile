@@ -40,8 +40,8 @@ unittest3: dominion.o unittest3.c
 unittest4: dominion.o unittest4.c
 	gcc -o unittest4 -g  unittest4.c   dominion.o rngs.o $(CFLAGS)
 
-unittest5: dominion.o unittest5.c
-	gcc -o unittest5 -g  unittest5.c   dominion.o rngs.o $(CFLAGS)
+unittest5: dominion.o unittest6.c
+	gcc -o unittest6 -g  unittest6.c   dominion.o rngs.o $(CFLAGS)
 
 
 unittestresults: unittest1 
@@ -49,9 +49,9 @@ unittestresults: unittest1
 	./unittest2 >>unittestresults.out
 	./unittest3 >>unittestresults.out
 	./unittest4 >>unittestresults.out
-	./unittest5 >>unittestresults.out
+	./unittest6 >>unittestresults.out
 	gcov -b -f -c  dominion.c >> unittestresults.out
 	-gcovr -r . --html  --html-details -o report.html 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe unittest1 unittest1.exe unittest2 unittest2.exe  unittest3 unittest3.exe unittest4 unittest4.exe unittest5 unittest5.exe *.gcov *.gcda *.gcno *.so *.out *.html testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe unittest1 unittest1.exe unittest2 unittest2.exe  unittest3 unittest3.exe unittest4 unittest4.exe unittest5 unittest5.exe unittest6 unittest6.exe *.gcov *.gcda *.gcno *.so *.out *.html testDrawCard testDrawCard.exe
