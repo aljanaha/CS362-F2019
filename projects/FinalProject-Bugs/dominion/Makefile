@@ -68,6 +68,7 @@ unittestresults: unittest1 unittest2 unittest3 unittest4 unittest5 unittest6 uni
 	./unittest2 >>unittestresults.out
 	./unittest3 >>unittestresults.out
 	./unittest4 >>unittestresults.out
+	./unittest5 >>unittestresults.out
 	./unittest6 >>unittestresults.out
 	./unittest7 >>unittestresults.out
 	./unittest8 >>unittestresults.out
