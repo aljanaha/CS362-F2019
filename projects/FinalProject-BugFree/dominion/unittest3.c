@@ -19,6 +19,7 @@ void testPositiveCase(int cardToTrash, int cardToWin)
     // Set player hand including remodel
     int hand[5] = {remodel, cardToTrash, copper, copper, estate};
     setPlayerHand(currentPlayer, 5, hand, &G);
+    G.supplyCount[cardToWin] = 1;
     int cardToTrashCountBefore = fullDeckCount(currentPlayer, cardToTrash, &G);
     int cardToGainCountBefore = fullDeckCount(currentPlayer, cardToWin, &G);
     int handPos = 0;
