@@ -28,12 +28,10 @@ void testMinion(int choice1, int choice2)
     setPlayerHand(currentPlayer, 5, hand, &G);
     struct gameState gBefore;
     memcpy(&gBefore, &G, sizeof(struct gameState));
-    int treasureBefore = G.coins;
     int handCountBefore = G.handCount[currentPlayer];
     int discardCountBefore = G.discardCount[currentPlayer];
     int deckCountBefore = G.deckCount[currentPlayer];
     int r = cardEffect(minion, choice1, choice2, 0, &G, handPos, &bonus);
-    int treasureAfter = G.coins;
     int handCountAfter = G.handCount[currentPlayer];
     int discardCountAfter = G.discardCount[currentPlayer];
     int deckCountAfter = G.deckCount[currentPlayer];
@@ -44,13 +42,13 @@ void testMinion(int choice1, int choice2)
     }
     else if (choice1)
     {
-        assert(treasureBefore + 2, treasureAfter, "Treasure is incorrect");
+        assert(bonus, 2, "Treasure is incorrect");
         assert(handCountBefore - 1, handCountAfter, "Treasure is incorrect");
         assert(deckCountBefore, deckCountAfter, "Incorrect deck count");
     }
     else if (choice2)
     {
-        assert(treasureBefore, treasureAfter, "Treasure is incorrect");
+        assert(bonus, 0, "Treasure is incorrect");
         assert(4, handCountAfter, "Incorrect hand count");
         assert(discardCountBefore + handCountBefore, discardCountAfter, "Incorrect discard count");
         assert(deckCountBefore - 4, deckCountAfter, "Incorrect deck count");

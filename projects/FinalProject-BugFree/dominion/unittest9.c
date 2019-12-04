@@ -28,17 +28,15 @@ void revealCards(int card1ToReveal, int card2ToReveal, int increaseHand, int inc
     G.deck[nextPlayer][G.deckCount[nextPlayer] - 1] = card1ToReveal;
     G.deck[nextPlayer][G.deckCount[nextPlayer] - 2] = card2ToReveal;
     int actionsBefore = G.numActions;
-    int treasureBefore = G.coins;
     int handCountBefore = G.handCount[currentPlayer];
     int handPos = 0;
     int bonus = 0;
     cardEffect(tribute, 0, 0, 0, &G, handPos, &bonus);
     int actionsAfter = G.numActions;
-    int treasureAfter = G.coins;
     int handCountAfter = G.handCount[currentPlayer];
 
     assert(actionsBefore + increaseActions, actionsAfter, "Incorrect number of actions");
-    assert(treasureBefore + increaseTreasure, treasureAfter, "Incorrect number of treasure");
+    assert(increaseTreasure, bonus, "Incorrect number of treasure");
     assert(handCountBefore + increaseHand - 1, handCountAfter, "Incorrect number of cards in hand");
 }
 
