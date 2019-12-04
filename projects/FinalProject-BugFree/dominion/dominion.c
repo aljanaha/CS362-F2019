@@ -975,8 +975,12 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
         state->numActions++;
 
         //discard card from hand
-        discardCard(handPos, currentPlayer, state, 0);
+        
+        if (choice1 && choice2){
+            return -1;
+        }
 
+        discardCard(handPos, currentPlayer, state, 0);
         if (choice1)
         {
             (*bonus) += 2;
@@ -1474,9 +1478,10 @@ int compareArrays(int *array1, int *array2, int size1, int size2)
 
 int unchangedPlayer(int player, struct gameState *stateAfter, struct gameState *stateBefore)
 {
-    return compareArrays(stateAfter->hand[player], stateBefore->hand[player], stateAfter->handCount[player], stateBefore->handCount[player]) ||
-           compareArrays(stateAfter->deck[player], stateBefore->deck[player], stateAfter->deckCount[player], stateBefore->deckCount[player]) ||
-           compareArrays(stateAfter->discard[player], stateBefore->discard[player], stateAfter->discardCount[player], stateBefore->discardCount[player]);
+    int sameHand=compareArrays(stateAfter->hand[player], stateBefore->hand[player], stateAfter->handCount[player], stateBefore->handCount[player]);
+    int sameDeck=compareArrays(stateAfter->deck[player], stateBefore->deck[player], stateAfter->deckCount[player], stateBefore->deckCount[player]);
+    int sameDiscard= compareArrays(stateAfter->discard[player], stateBefore->discard[player], stateAfter->discardCount[player], stateBefore->discardCount[player]);
+    return sameHand && sameDeck && sameDiscard;
 }
 
 void setSupplyCount(struct gameState *G, int card, int supplyCount)
