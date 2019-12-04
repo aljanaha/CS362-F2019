@@ -8,7 +8,7 @@
 
 void testMinion(int choice1, int choice2)
 {
-    printf("\ttest miniion \n");
+    printf("\ttest minion \n");
     printf("\tchoice 1 %d, choice2 %d \n", choice1, choice2);
     // Game instance
     struct gameState G;
