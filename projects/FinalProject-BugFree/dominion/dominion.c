@@ -693,6 +693,34 @@ int getCost(int cardNumber)
     return -1;
 }
 
+
+int cardIsAction(int card)
+{
+    if (card == adventurer || card == council_room || card == feast || card == mine || card == remodel || card == smithy || card == village || card == baron || card == great_hall || card == minion || card == steward || card == tribute || card == ambassador || card == cutpurse || card == embargo || card == outpost || card == salvager || card == sea_hag || card == treasure_map)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+int cardIsTreasure(int card)
+{
+    if (card == copper || card == silver || card == gold)
+    {
+        return 1;
+    }
+    return 0;
+}
+int cardIsVictory(int card)
+{
+    if (card == estate || card == duchy || card == province || card == gardens || card == great_hall)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
     int i;
@@ -1066,19 +1094,21 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             tributeRevealedCards[1] = -1;
         }
 
-        for (i = 0; i <= 2; i++)
+        discardCard(handPos, currentPlayer, state, 0);
+
+        for (i = 0; i < 2; i++)
         {
-            if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold)
+            if (cardIsTreasure(tributeRevealedCards[i]))
             { //Treasure cards
                 state->coins += 2;
             }
 
-            else if (tributeRevealedCards[i] == estate || tributeRevealedCards[i] == duchy || tributeRevealedCards[i] == province || tributeRevealedCards[i] == gardens || tributeRevealedCards[i] == great_hall)
+            else if (cardIsVictory(tributeRevealedCards[i]))
             { //Victory Card Found
                 drawCard(currentPlayer, state);
                 drawCard(currentPlayer, state);
             }
-            else
+            else if (cardIsAction(tributeRevealedCards[i]))
             { //Action Card
                 state->numActions = state->numActions + 2;
             }
