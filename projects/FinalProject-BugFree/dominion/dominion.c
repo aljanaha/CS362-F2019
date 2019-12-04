@@ -904,7 +904,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
         {
             if (state->hand[currentPlayer][i] == j)
             {
-                discardCard(i, currentPlayer, state, 0);
+                discardCard(i, currentPlayer, state, 1);
                 break;
             }
         }
@@ -1144,10 +1144,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             }
             tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer] - 1];
             state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
-            state->deckCount[nextPlayer]--;
             tributeRevealedCards[1] = state->deck[nextPlayer][state->deckCount[nextPlayer] - 1];
             state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
-            state->deckCount[nextPlayer]--;
         }
 
         if (tributeRevealedCards[0] == tributeRevealedCards[1])
