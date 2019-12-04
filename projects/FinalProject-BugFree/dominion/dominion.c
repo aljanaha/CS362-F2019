@@ -447,97 +447,51 @@ int isGameOver(struct gameState *state)
     return 0;
 }
 
-int scoreFor(int player, struct gameState *state)
+int scoreSubDeck(int deckSize, int *deck, int player, struct gameState *state)
 {
-
     int i;
     int score = 0;
     //score from hand
-    for (i = 0; i < state->handCount[player]; i++)
+    for (i = 0; i < deckSize; i++)
     {
-        if (state->hand[player][i] == curse)
+        if (deck[i] == curse)
         {
             score = score - 1;
         };
-        if (state->hand[player][i] == estate)
+        if (deck[i] == estate)
         {
             score = score + 1;
         };
-        if (state->hand[player][i] == duchy)
+        if (deck[i] == duchy)
         {
             score = score + 3;
         };
-        if (state->hand[player][i] == province)
+        if (deck[i] == province)
         {
             score = score + 6;
         };
-        if (state->hand[player][i] == great_hall)
+        if (deck[i] == great_hall)
         {
             score = score + 1;
         };
-        if (state->hand[player][i] == gardens)
+        if (deck[i] == gardens)
         {
             score = score + (fullDeckCount(player, 0, state) / 10);
         };
     }
+    return score;
+}
 
+int scoreFor(int player, struct gameState *state)
+{
+
+    int score = 0;
+    //score from hand
+    score += scoreSubDeck(state->handCount[player], state->hand[player], player, state);
     //score from discard
-    for (i = 0; i < state->discardCount[player]; i++)
-    {
-        if (state->discard[player][i] == curse)
-        {
-            score = score - 1;
-        };
-        if (state->discard[player][i] == estate)
-        {
-            score = score + 1;
-        };
-        if (state->discard[player][i] == duchy)
-        {
-            score = score + 3;
-        };
-        if (state->discard[player][i] == province)
-        {
-            score = score + 6;
-        };
-        if (state->discard[player][i] == great_hall)
-        {
-            score = score + 1;
-        };
-        if (state->discard[player][i] == gardens)
-        {
-            score = score + (fullDeckCount(player, 0, state) / 10);
-        };
-    }
-
+    score += scoreSubDeck(state->discardCount[player], state->discard[player], player, state);
     //score from deck
-    for (i = 0; i < state->discardCount[player]; i++)
-    {
-        if (state->deck[player][i] == curse)
-        {
-            score = score - 1;
-        };
-        if (state->deck[player][i] == estate)
-        {
-            score = score + 1;
-        };
-        if (state->deck[player][i] == duchy)
-        {
-            score = score + 3;
-        };
-        if (state->deck[player][i] == province)
-        {
-            score = score + 6;
-        };
-        if (state->deck[player][i] == great_hall)
-        {
-            score = score + 1;
-        };
-        if (state->deck[player][i] == gardens)
-        {
-            score = score + (fullDeckCount(player, 0, state) / 10);
-        };
-    }
+    score += scoreSubDeck(state->deckCount[player], state->deck[player], player, state);
 
     return score;
 }
@@ -889,7 +843,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             return -1;
         }
 
-        if ( getCost(choice2)> (getCost(state->hand[currentPlayer][choice1]) + 3))
+        if (getCost(choice2) > (getCost(state->hand[currentPlayer][choice1]) + 3))
         {
             return -1;
         }
@@ -914,7 +868,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     case remodel:
         j = state->hand[currentPlayer][choice1]; //store card we will trash
 
-        if (getCost(choice2) > (getCost(state->hand[currentPlayer][choice1]) + 2) )
+        if (getCost(choice2) > (getCost(state->hand[currentPlayer][choice1]) + 2))
         {
             return -1;
         }

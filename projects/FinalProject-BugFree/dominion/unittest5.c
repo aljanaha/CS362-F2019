@@ -49,7 +49,7 @@ int main()
 
     int deck3Size = 0;
     int deck3[0] = {};
-    int hand3Size = 10;
+    int hand3Size = 5;
     int hand3[5] = {estate, duchy, province, curse, great_hall};
     int discard3Size = 0;
     int discard3[0] = {};
