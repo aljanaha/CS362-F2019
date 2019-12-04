@@ -904,7 +904,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             while (card_not_discarded)
             {
                 if (state->hand[currentPlayer][p] == estate)
-                {               //Found an estate card!
+                {                  //Found an estate card!
                     (*bonus) += 4; //Add 4 coins to the amount of coins
                     state->discard[currentPlayer][state->discardCount[currentPlayer]] = state->hand[currentPlayer][p];
                     state->discardCount[currentPlayer]++;
@@ -1127,9 +1127,11 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             return -1;
         }
 
+        int cardToDiscard = state->hand[currentPlayer][choice1];
+
         for (i = 0; i < state->handCount[currentPlayer]; i++)
         {
-            if (i != handPos && i == state->hand[currentPlayer][choice1] && i != choice1)
+            if (i != handPos && state->hand[currentPlayer][i] == cardToDiscard)
             {
                 j++;
             }
@@ -1140,17 +1142,17 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
         }
 
         if (DEBUG)
-            printf("Player %d reveals card number: %d\n", currentPlayer, state->hand[currentPlayer][choice1]);
+            printf("Player %d reveals card number: %d\n", currentPlayer, cardToDiscard);
 
         //increase supply count for choosen card by amount being discarded
-        state->supplyCount[state->hand[currentPlayer][choice1]] += choice2;
+        state->supplyCount[cardToDiscard] += choice2;
 
         //each other player gains a copy of revealed card
         for (i = 0; i < state->numPlayers; i++)
         {
             if (i != currentPlayer)
             {
-                gainCard(state->hand[currentPlayer][choice1], state, 0, i);
+                gainCard(cardToDiscard, state, 0, i);
             }
         }
 
@@ -1160,9 +1162,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
         //trash copies of cards returned to supply
         for (j = 0; j < choice2; j++)
         {
-            for (i = 0; i < state->handCount[currentPlayer]; i++)
+            for (i = state->handCount[currentPlayer] - 1; i >= 0; i--)
             {
-                if (state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1])
+                if (state->hand[currentPlayer][i] == cardToDiscard)
                 {
                     discardCard(i, currentPlayer, state, 1);
                     break;

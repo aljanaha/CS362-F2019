@@ -31,10 +31,10 @@ void testAmbassador(int *cardsToDiscard, int numberCardsDiscard)
     int bonus = 0;
     int supplyCountBefore = G.supplyCount[cardsToDiscard[0]];
     int copiesBefore = fullDeckCount(currentPlayer, cardsToDiscard[0], &G);
-    cardEffect(ambassador, 5, numberCardsDiscard, 0, &G, handPos, &bonus);
+    cardEffect(ambassador, 4, numberCardsDiscard, 0, &G, handPos, &bonus);
     int supplyCountAfter = G.supplyCount[cardsToDiscard[0]];
     int copiesAfter = fullDeckCount(currentPlayer, cardsToDiscard[0], &G);
-    assert(supplyCountBefore + numberCardsDiscard - G.numPlayers, supplyCountAfter, "Incorrect number of cards in supply");
+    assert(supplyCountBefore + numberCardsDiscard - G.numPlayers+1, supplyCountAfter, "Incorrect number of cards in supply");
     assert(copiesBefore, copiesAfter + numberCardsDiscard, "Incorrect number of cards in player cards");
 }
 
