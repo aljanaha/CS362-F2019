@@ -19,12 +19,13 @@ void testPositiveCase(int cardToWin, int treasureToSet)
     // Set player hand including feast
     int hand[5] = {feast, copper, copper, copper, estate};
     setPlayerHand(currentPlayer, 5, hand, &G);
+    G.supplyCount[cardToWin] = 1;
     int cardToGainCountBefore = fullDeckCount(currentPlayer, cardToWin, &G);
     int handPos = 0;
     int bonus = 0;
     // Se the treasure
     G.coins = treasureToSet;
-    int r = cardEffect(feast, 1, cardToWin, 0, &G, handPos, &bonus);
+    int r = cardEffect(feast, cardToWin, 0, 0, &G, handPos, &bonus);
     int cardToGainCountAfter = fullDeckCount(currentPlayer, cardToWin, &G);
     int treasureAfter = G.coins;
     assert(0, r, "Should succeed");
@@ -51,7 +52,7 @@ void testNegativeCase(int cardToWin, int treasureToSet)
     int bonus = 0;
     // Se the treasure
     G.coins = treasureToSet;
-    int r = cardEffect(feast, 0, 0, 0, &G, handPos, &bonus);
+    int r = cardEffect(feast, cardToWin, 0, 0, &G, handPos, &bonus);
     int cardToGainCountAfter = fullDeckCount(currentPlayer, cardToWin, &G);
     int treasureAfter = G.coins;
     assert(-1, r, "Should not succeed");
